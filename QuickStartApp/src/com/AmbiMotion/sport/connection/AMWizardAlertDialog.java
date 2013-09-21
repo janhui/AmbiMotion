@@ -1,4 +1,4 @@
-package com.philips.lighting.quickstart;
+package com.AmbiMotion.sport.connection;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.view.WindowManager;
 
+import com.AmbiMotion.sport.R;
+
 /**
  * Generic class for Alert and Progress dialogs wizard
  * 
@@ -15,18 +17,18 @@ import android.view.WindowManager;
  * 
  */
 
-public final class PHWizardAlertDialog {
+public final class AMWizardAlertDialog {
 
     private ProgressDialog pdialog;
-    private static PHWizardAlertDialog dialogs;
+    private static AMWizardAlertDialog dialogs;
 
-    private PHWizardAlertDialog() {
+    private AMWizardAlertDialog() {
 
     }
 
-    public static synchronized PHWizardAlertDialog getInstance() {
+    public static synchronized AMWizardAlertDialog getInstance() {
         if (dialogs == null) {
-            dialogs = new PHWizardAlertDialog();
+            dialogs = new AMWizardAlertDialog();
         }
         return dialogs;
     }

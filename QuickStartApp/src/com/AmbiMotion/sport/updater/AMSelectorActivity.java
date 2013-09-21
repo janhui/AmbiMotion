@@ -1,16 +1,19 @@
-package com.philips.lighting.quickstart;
+package com.AmbiMotion.sport.updater;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Random;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Spinner;
 
+import com.AmbiMotion.sport.R;
 import com.philips.lighting.hue.listener.PHLightListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
@@ -18,28 +21,36 @@ import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
 
-public class MyApplicationActivity extends Activity {
+public class AMSelectorActivity extends Activity {
     private PHHueSDK phHueSDK;
     private static final int MAX_HUE=65535;
     public static final String TAG = "QuickStart";
+    
+    private Spinner league;
+    private Spinner team;
+    private Button submit;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.app_name);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_selector);
         phHueSDK = PHHueSDK.create(getApplicationContext());
-        Button randomButton;
-        randomButton = (Button) findViewById(R.id.buttonRand);
-        randomButton.setOnClickListener(new OnClickListener() {
+        submit = (Button) findViewById(R.id.teamSelect);
+        submit.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                randomLights();
+            	Intent myIntent = new Intent(getApplicationContext(), AMUpdaterActivity.class);
+            	//myIntent.putExtra("key", value); //Optional parameters
+            	startActivity(myIntent);
             }
 
         });
 
+    }
+    public void updater(View view){
+    	
     }
 
     public void randomLights() {

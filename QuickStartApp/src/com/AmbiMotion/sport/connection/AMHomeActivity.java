@@ -1,4 +1,4 @@
-package com.philips.lighting.quickstart;
+package com.AmbiMotion.sport.connection;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -17,12 +17,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.AmbiMotion.sport.R;
+import com.AmbiMotion.sport.updater.AMSelectorActivity;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -32,7 +33,7 @@ import com.philips.lighting.hue.sdk.data.BridgeHeader;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHHueError;
 
-public class PHHomeActivity extends Activity implements OnItemClickListener {
+public class AMHomeActivity extends Activity implements OnItemClickListener {
 
     private PHHueSDK phHueSDK;
     private BridgeListAdapter adapter;
@@ -81,39 +82,39 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
                 return;
             }
             if (code == PHMessageType.BRIDGE_NOT_FOUND) {
-                PHWizardAlertDialog.getInstance().closeProgressDialog();
-                PHWizardAlertDialog.showErrorDialog(act, message,
+                AMWizardAlertDialog.getInstance().closeProgressDialog();
+                AMWizardAlertDialog.showErrorDialog(act, message,
                         R.string.btn_ok);
             } else if (code == PHMessageType.PUSHLINK_BUTTON_NOT_PRESSED) {
-                if (act instanceof PHPushlinkActivity) {
-                    ((PHPushlinkActivity) act).incrementProgress();
+                if (act instanceof AMPushlinkActivity) {
+                    ((AMPushlinkActivity) act).incrementProgress();
                 }
             } else if (code == PHMessageType.PUSHLINK_AUTHENTICATION_FAILED) {
-                if (act instanceof PHPushlinkActivity) {
-                    ((PHPushlinkActivity) act).incrementProgress();
+                if (act instanceof AMPushlinkActivity) {
+                    ((AMPushlinkActivity) act).incrementProgress();
                 }
-                PHWizardAlertDialog.showAuthenticationErrorDialog(act, message,
+                AMWizardAlertDialog.showAuthenticationErrorDialog(act, message,
                         R.string.btn_ok);
 
             } else if (code == PHHueError.BRIDGE_NOT_RESPONDING) {
-                PHWizardAlertDialog.getInstance().closeProgressDialog();
-                PHWizardAlertDialog.showErrorDialog(act, message, R.string.btn_ok);
+                AMWizardAlertDialog.getInstance().closeProgressDialog();
+                AMWizardAlertDialog.showErrorDialog(act, message, R.string.btn_ok);
 
             } else if (code == PHHueError.NO_CONNECTION) {
                 Log.w(TAG, "On No Connection");
             } else if (code == PHHueError.AUTHENTICATION_FAILED) {
-                PHWizardAlertDialog.getInstance().closeProgressDialog();
+                AMWizardAlertDialog.getInstance().closeProgressDialog();
 
-                if (act instanceof PHHomeActivity) {
-                    PHWizardAlertDialog.showErrorDialog(act, message,
+                if (act instanceof AMHomeActivity) {
+                    AMWizardAlertDialog.showErrorDialog(act, message,
                             R.string.btn_ok);
-                    ((PHHomeActivity) act).refresh();
+                    ((AMHomeActivity) act).refresh();
                 } else {
                     goBackToHome();
                 }
             } else {
                 // For any other error
-                PHWizardAlertDialog.getInstance().closeProgressDialog();
+                AMWizardAlertDialog.getInstance().closeProgressDialog();
                 Toast.makeText(phHueSDK.getApplicationContext(), message,
                         Toast.LENGTH_LONG).show();
             }
@@ -130,20 +131,20 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
             Log.w(TAG, "Access Points Found.");
             Activity act = phHueSDK.getCurrentActivty();
 
-            PHWizardAlertDialog.getInstance().closeProgressDialog();
+            AMWizardAlertDialog.getInstance().closeProgressDialog();
             if (accessPoint != null && accessPoint.size() > 0) {
                 phHueSDK.getAccessPointsFound().addAll(accessPoint);
                 // show list of bridges
-                if (act instanceof PHAccessPointListActivity) {
-                    ((PHAccessPointListActivity) act).refreshList();
+                if (act instanceof AMAccessPointListActivity) {
+                    ((AMAccessPointListActivity) act).refreshList();
                 } else {
                     act.startActivity(new Intent(act,
-                            PHAccessPointListActivity.class));
+                            AMAccessPointListActivity.class));
                 }
 
             } else {
                 // show error dialog
-                PHWizardAlertDialog.showErrorDialog(act,
+                AMWizardAlertDialog.showErrorDialog(act,
                         phHueSDK.getApplicationContext().getString( R.string.could_not_find_bridge),R.string.btn_retry);
             }
         }
@@ -153,9 +154,9 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
             Log.w(TAG, "Bridge Connected.");
             phHueSDK.setSelectedBridge(b);
             phHueSDK.getLastHeartbeat().put(b.getResourceCache().getBridgeConfiguration() .getIpAddress(), System.currentTimeMillis());
-            PHWizardAlertDialog.getInstance().closeProgressDialog();
+            AMWizardAlertDialog.getInstance().closeProgressDialog();
             Intent intent = new Intent(getApplicationContext(),
-                    MyApplicationActivity.class);
+                    AMSelectorActivity.class);
             startActivity(intent);
         }
 
@@ -164,13 +165,13 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
             Log.w(TAG, "Authentication Required.");
 
             Activity act = phHueSDK.getCurrentActivty();
-            PHWizardAlertDialog.getInstance().closeProgressDialog();
-            act.startActivity(new Intent(act, PHPushlinkActivity.class));
+            AMWizardAlertDialog.getInstance().closeProgressDialog();
+            act.startActivity(new Intent(act, AMPushlinkActivity.class));
             phHueSDK.startPushlinkAuthentication(accessPoint);
-            if (act instanceof PHAccessPointListActivity) {
+            if (act instanceof AMAccessPointListActivity) {
                 act.finish();
-            } else if (act instanceof PHHomeActivity) {
-                ((PHHomeActivity) act).refresh();
+            } else if (act instanceof AMHomeActivity) {
+                ((AMHomeActivity) act).refresh();
             }
         }
 
@@ -188,8 +189,8 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
                 }
             }
 
-            if (act instanceof PHHomeActivity) {
-                ((PHHomeActivity) act).refresh();
+            if (act instanceof AMHomeActivity) {
+                ((AMHomeActivity) act).refresh();
             }
 
         }
@@ -200,8 +201,8 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
             Log.v(TAG, "onConnectionLost : " + accessPoint.getIpAddress());
             if (!phHueSDK.getDisconnectedAccessPoint().contains(accessPoint)) {
                 phHueSDK.getDisconnectedAccessPoint().add(accessPoint);
-                if (act instanceof PHHomeActivity) {
-                    ((PHHomeActivity) act).refresh();
+                if (act instanceof AMHomeActivity) {
+                    ((AMHomeActivity) act).refresh();
                 } else {
                     goBackToHome();
                 }
@@ -231,7 +232,7 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
 
         public BridgeListAdapter(ArrayList<BridgeHeader> bridgeData) {
             this.bridgeData = bridgeData;
-            mInflater = LayoutInflater.from(PHHomeActivity.this);
+            mInflater = LayoutInflater.from(AMHomeActivity.this);
         }
 
         @Override
@@ -297,7 +298,7 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
 
     public void goBackToHome() {
         Intent i = new Intent(phHueSDK.getApplicationContext(),
-                PHHomeActivity.class);
+                AMHomeActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
@@ -336,7 +337,7 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
         switch (item.getItemId()) {
         case R.id.find_new_bridge:
             // Display Search Progress animation.
-            PHWizardAlertDialog.getInstance().showProgressDialog(R.string.search_progress, this);
+            AMWizardAlertDialog.getInstance().showProgressDialog(R.string.search_progress, this);
             PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
             // Start the UPNP Searching of local bridges.
             sm.search(true, true);
@@ -350,7 +351,7 @@ public class PHHomeActivity extends Activity implements OnItemClickListener {
         BridgeHeader header = (BridgeHeader) lvBridges.getItemAtPosition(index);
         if (header.getStatus().equals("Connected")) {
 
-            Intent intent = new Intent(this, MyApplicationActivity.class);
+            Intent intent = new Intent(this, AMSelectorActivity.class);
             startActivity(intent);
         } else {
             PHAccessPoint accessPoint = new PHAccessPoint();

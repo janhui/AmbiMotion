@@ -1,4 +1,4 @@
-package com.philips.lighting.quickstart;
+package com.AmbiMotion.sport.connection;
 
 import java.util.ArrayList;
 
@@ -17,6 +17,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.AmbiMotion.sport.R;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -25,8 +26,9 @@ import com.philips.lighting.hue.sdk.PHHueSDK;
  * Activity to display list of connected bridges.
  * 
  * @author Pallavi P. Ganorakr
+ *
  */
-public class PHAccessPointListActivity extends Activity implements
+public class AMAccessPointListActivity extends Activity implements
         OnItemClickListener {
     private AccessPointListAdapter adapter;
     private PHHueSDK phHueSDK;
@@ -86,7 +88,7 @@ public class PHAccessPointListActivity extends Activity implements
         switch (item.getItemId()) {
         case R.id.refresh:
             phHueSDK = PHHueSDK.getInstance(getApplicationContext());
-            PHWizardAlertDialog.getInstance().showProgressDialog(
+            AMWizardAlertDialog.getInstance().showProgressDialog(
                     R.string.search_progress, this);
             PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK
                     .getSDKService(PHHueSDK.SEARCH_BRIDGE);

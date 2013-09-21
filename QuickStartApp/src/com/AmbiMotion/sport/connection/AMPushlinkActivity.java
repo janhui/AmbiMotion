@@ -1,9 +1,10 @@
-package com.philips.lighting.quickstart;
+package com.AmbiMotion.sport.connection;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
+import com.AmbiMotion.sport.R;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 
 /**
@@ -14,7 +15,7 @@ import com.philips.lighting.hue.sdk.PHHueSDK;
  * 
  */
 
-public class PHPushlinkActivity extends Activity {
+public class AMPushlinkActivity extends Activity {
     private ProgressBar pbar;
     private static final int MAX_TIME=30;
 
