@@ -26,9 +26,9 @@ For installing the ADB drivers for the Amazon Kindle it is recommended to follow
 https://developer.amazon.com/sdk/fire/setup.html  (Installing SDK Add-Ons)
 
 https://developer.amazon.com/sdk/fire/connect-adb.html
- 
+
 ##Connecting to/finding a Bridge
-On your mobile device in your Wi-Fi settings choose the router that corresponds to the label on your bridge. 
+On your mobile device in your Wi-Fi settings connect to the router that corresponds to the label on your bridge (e.g.  For "hue dev 009" Wi-Fi name would be "hue dev 009 2.4GHz"). 
 
 Password is: <b>philipshue</b>
  
