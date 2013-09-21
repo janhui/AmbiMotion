@@ -30,6 +30,14 @@
     <string name="title_error">Error</string>
     <string name="txt_last_heartbeat">Last Heartbeat : </string>
     
+    <string name="league_prompt">Select a league</string>
+    <string-array name="league_arrays" >
+        <item>premier-league</item>
+    </string-array>
+    
+    
+    <string name="team_prompt">Select a team</string>
+    
     
     
     

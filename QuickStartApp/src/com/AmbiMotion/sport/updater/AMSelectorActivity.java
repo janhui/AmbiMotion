@@ -26,8 +26,8 @@ public class AMSelectorActivity extends Activity {
     private static final int MAX_HUE=65535;
     public static final String TAG = "QuickStart";
     
-    private Spinner league;
-    private Spinner team;
+    private Spinner leagueSpinner;
+    private Spinner teamSpinner;
     private Button submit;
     
     @Override
@@ -36,7 +36,10 @@ public class AMSelectorActivity extends Activity {
         setTitle(R.string.app_name);
         setContentView(R.layout.activity_selector);
         phHueSDK = PHHueSDK.create(getApplicationContext());
-        submit = (Button) findViewById(R.id.teamSelect);
+        
+        
+        addItemsOnteam();
+        submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -49,7 +52,13 @@ public class AMSelectorActivity extends Activity {
         });
 
     }
-    public void updater(View view){
+    private void addItemsOnteam() {
+    	teamSpinner = (Spinner) findViewById(R.id.teams);
+    	
+    	
+		
+	}
+	public void updater(View view){
     	
     }
 
