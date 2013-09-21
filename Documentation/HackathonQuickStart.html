@@ -1,0 +1,66 @@
+
+<html>
+ <head>
+   <title>Hackathon - Quick Start</title>
+ </head>
+ <body>
+ 
+<h1>Hackathon - Quick Start Developers Guide</h1>
+
+<h2>Prerequisites</h2>
+
+ <ul>
+  <li>Android Develpment environment (IDE, AndroidSDK, Java SDK, USB Cables, Android Device)</li>
+  <li>A Hue Kit (Bridge/Router/Lights)</li>
+ </ul>
+
+<h2>Source Code</h2>
+Either download the source as a .zip or use your favourite git client:-
+<br>
+<a href="https://github.com/PhilipsHue/PhilipsHueSDKAndroid.git">https://github.com/PhilipsHue/PhilipsHueSDKAndroid</a>
+
+<br><br>
+Here you have 2 Sample Apps (Android projects). Pick either to use as a starting point.
+ <ul>
+  <li>QuickStart App.  Contains a skeleton app with minimal functionality for connecting to a bridge and setting lights.</li>
+  <li>Example App.  A more complete app containing schedules, groups, scenes.</li>
+ </ul>
+ Import either (as an Andriod project) into your favourite IDE.
+ 
+ <h2>Deployment</h2>
+     For installing the ADB drivers for the Amazon Kindle it is recommended to follow the below 2 links.<br>
+    <a href="https://developer.amazon.com/sdk/fire/setup.html" target="_blank">https://developer.amazon.com/sdk/fire/setup.html</a>&nbsp;(Installing SDK Add-Ons)<br>
+    <a href="https://developer.amazon.com/sdk/fire/connect-adb.html" target="_blank">https://developer.amazon.com/sdk/fire/connect-adb.html</a>
+ 
+  <h2>Connecting to/finding a Bridge</h2>
+ On your mobile device in your Wi-Fi settings choose the router that corresponds to the label on your bridge. 
+ <br>Password is: <b>philipshue</b>
+ 
+   <h2>Classpath</h2>
+ The <b>huelocalsdk.jar</b> and the <b>sdkresources.jar</b> should be placed in your project buildpath (these are located under the /libs folder in either of the sample apps).
+ 
+   <h2>Coding Tips</h2>
+   To obtain an instance of the SDK:<br>
+   <b>phHueSDK = PHHueSDK.getInstance(getApplicationContext());</b>
+   <br> <br>
+   To get bridge information (e.g. Lights, Config, Scenes, Groups) use the Bridge Resource Cache.
+   <br>
+   e.g.<br>
+    <b>PHBridge bridge = phHueSDK.getSelectedBridge();</b><br>
+	<b>PHBridgeResourceCache cache = bridge.getResourceCache();</b><br>
+    <b>ArrayList&lt;PHLight&gt; allLights = cache.getAllLights();</b>
+
+   <br> <br>
+   For updates (e.g. change light state) use the Bridge directly:
+   <br>
+   e.g.<br>
+    <b>PHBridge bridge = phHueSDK.getSelectedBridge();</b><br>
+	<b>bridge.updateLightState(light, lightState, listener);</b><br>
+    <br><br>
+    Have fun!
+	<br>
+ </body>
+</html>
+
+
+
