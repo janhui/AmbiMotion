@@ -38,11 +38,10 @@ public class AMUpdaterActivity extends Activity {
 	String team;
 	String competition;
 	Intent thisIntent;
-	
-	
-	JSONArray sample;
-	
+	JSONArray incidentArray;
 
+	JSONArray sample;
+	Date currentTime;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,54 +50,65 @@ public class AMUpdaterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		Log.v("team", "0");
-		
+
 		setTitle(R.string.app_name);
 		setContentView(R.layout.activity_updater);
 
+		currentTime = GetUTCdatetimeAsDate();
 		Log.v("team", "1");
 		thisIntent = getIntent();
 		team = thisIntent.getStringExtra("Team");
 		Log.v("team", team);
 		competition = "premier-league";
-		
-		
-		updateLights(competition, team);
-		
-/*		
-		Date d = new Date();
-		int time = d.getMinutes()+60;
-		Date f = new Date();
-		f.setMinutes(time);
-		while(d.compareTo(f)==-1){
 
-			updateLights(competition, team);
-			
+		currentTime.setDate(29);
+		currentTime.setMonth(11);
+		currentTime.setYear(112);
+		currentTime.setHours(17);
+		currentTime.setMinutes(31);
+		
+
+		long count = 5400001; // for simulation
+		long g = 0; // for simulatiom
+		while (count - g > 0) {
 			try {
 				Thread.sleep(1000);
-			} catch (InterruptedException e) {
+			} catch (InterruptedException e2) {
+				continue;
 			}
-		}
-		*/
-		
 
-	}
+			// currentTime.setHours(17);
+			long millisec = 1356825600000L+5400000;
+			currentTime.setTime(millisec + g);
+
+			g += 600000;
+			Log.v("timer",currentTime.toString());
+			updateLights(competition, team);
+		}
+		changeLight("Default");
+
+	} 
 
 	private void updateLights(String competition, String team) {
 
 		// url for live feeds
-		
-/*		team = "Arsenal";
-		String url = "http://api.statsfc.com/"
-				+ competition
-				+ "/live.json?key=esuv6VTfsX4NzXPZjD9x0yIgxMZ741uCYZFERDD8&team="
-				+ team + "&timezone=Europe/London";// +
-													// TimeZone.getDefault().getID();
-*/
-		
-		String url = "http://api.statsfc.com/premier-league/results.json?key=esuv6VTfsX4NzXPZjD9x0yIgxMZ741uCYZFERDD8"+
-				 "&year=2012/2013&team="+team+"&from=2012-09-01&to=2012-09-02&timezone=Europe/London&limit=100";
-		
-		
+
+		/*
+		 * team = "Arsenal"; String url = "http://api.statsfc.com/" +
+		 * competition +
+		 * "/live.json?key=esuv6VTfsX4NzXPZjD9x0yIgxMZ741uCYZFERDD8&team=" +
+		 * team + "&timezone=Europe/London";// + //
+		 * TimeZone.getDefault().getID();
+		 */
+
+		// String url =
+		// "http://api.statsfc.com/premier-league/results.json?key=esuv6VTfsX4NzXPZjD9x0yIgxMZ741uCYZFERDD8"+
+		// "&year=2012/2013&team="+team+"&from=2012-09-01&to=2012-09-02&timezone=Europe/London&limit=100";
+		String url = "http://api.statsfc.com/premier-league/results.json?key=esuv6VTfsX4NzXPZjD9x0yIgxMZ741uCYZFERDD8"
+				+ "&year=2012/2013&team="
+				+ team
+				+ "&from=2012-12-29&to=2012-12-30&timezone=Europe/London&limit=100";
+
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
 				new Listener<JSONArray>() {
 					@Override
@@ -108,23 +118,16 @@ public class AMUpdaterActivity extends Activity {
 						// to see if the game starts
 
 						String startTime = null;
-						try {  
-//							startTime = response.getJSONObject(i).getString(
-//									"gamestarted");
+						try {
+							// startTime = response.getJSONObject(i).getString(
+							// "gamestarted");
 							startTime = response.getJSONObject(i).getString(
 									"date");
 						} catch (JSONException e2) {
 						}
 						Log.v("Starttime", startTime);
 						Date kickoff = UTCtime(startTime);
-						Date currentTime = GetUTCdatetimeAsDate();
-						
-						currentTime.setDate(01);
-						currentTime.setMonth(8);
-						currentTime.setYear(112);
-						currentTime.setHours(16);
-						currentTime.setMinutes(40);
-						
+
 						Log.v("Current", currentTime.toString());
 						if (startTime == null) {
 							changeLight("Default Light");
@@ -132,9 +135,9 @@ public class AMUpdaterActivity extends Activity {
 							if (kickoff.compareTo(currentTime) == -1) {
 								changeLight("Start Light");
 
+
 								for (; i < response.length(); i++) {
 
-									JSONArray incidentArray;
 									try {
 										incidentArray = (JSONArray) response
 												.getJSONObject(i).get(
@@ -142,10 +145,12 @@ public class AMUpdaterActivity extends Activity {
 									} catch (JSONException e1) {
 										continue;
 									}
-									// checks if the current time is before the
-									// start 
+									// checks if the current time is before
+									// the
+									// start
 									// time
 									String minute;
+
 									try {
 										minute = incidentArray.getJSONObject(i)
 												.getString("minute");
@@ -153,18 +158,21 @@ public class AMUpdaterActivity extends Activity {
 										continue;
 									}
 									int mins = Integer.parseInt(minute) * 1000 * 60;
-									long kickoffOffset = kickoff.getTime()+mins;
+									long kickoffOffset = kickoff.getTime()
+											+ mins;
 									long currentTimeOffset = currentTime
 											.getTime();
 									int help = (int) (currentTimeOffset - kickoffOffset);
-									Log.v("check", "2  "+(help<(5*10000000)));
-									Log.v("check", "4  "+currentTimeOffset);
+									Log.v("check", "2  "
+											+ (help < (5 * 10000000)));
+									Log.v("check", "4  " + currentTimeOffset);
 
-									Log.v("check", "6  "+kickoffOffset);
+									Log.v("check", "6  " + kickoffOffset);
 
 									if (currentTimeOffset - kickoffOffset < 5 * 1000000) {
 
-										Log.v("Current", "check inside incident loop");
+										Log.v("Current",
+												"check inside incident loop");
 										checkIncidents(incidentArray);
 
 									}
@@ -181,7 +189,7 @@ public class AMUpdaterActivity extends Activity {
 					}
 				}, null);
 
-		AMSelectorActivity.QUEUE.add(jsonArrayRequest); 
+		AMSelectorActivity.QUEUE.add(jsonArrayRequest);
 
 	}
 
@@ -212,13 +220,13 @@ public class AMUpdaterActivity extends Activity {
 		int r = 255;
 		int g = 255;
 		int b = 255;
-		
+
 		switch (color.charAt(0)) {
 		case 'R':
 			r = 255;
 			g = 0;
 			b = 0;
-			
+
 			break;
 		case 'G':
 			r = 0;
@@ -227,7 +235,7 @@ public class AMUpdaterActivity extends Activity {
 			break;
 		case 'S':
 			r = 0;
-			g = 0;
+			g = 120;
 			b = 255;
 			break;
 
@@ -238,16 +246,12 @@ public class AMUpdaterActivity extends Activity {
 			break;
 		}
 
+		float xy[] = PHUtilities.calculateXYFromRGB(r, g, b, "LCT001");
+		PHLightState lightState = new PHLightState();
+		lightState.setX(xy[0]);
+		lightState.setY(xy[1]);
 
-			float xy[] = PHUtilities.calculateXYFromRGB(r, g, b, "LCT001");
-			PHLightState lightState = new PHLightState();
-			lightState.setX(xy[0]);
-			lightState.setY(xy[1]);
-			
-			
-			bridge.setLightStateForDefaultGroup(lightState);
-
-		  
+		bridge.setLightStateForDefaultGroup(lightState);   
 
 	}
 
@@ -293,15 +297,10 @@ public class AMUpdaterActivity extends Activity {
 	}
 
 	private void sampleJson() {
-		String url = "http://api.statsfc.com/premier-league/results.json?key=esuv6VTfsX4NzXPZjD9x0yIgxMZ741uCYZFERDD8"+
-					 "&year=2012/2013&team=Stoke-City&from=2012-09-01&to=2012-09-02&timezone=Europe/London&limit=100";
+		String url = "http://api.statsfc.com/premier-league/results.json?key=esuv6VTfsX4NzXPZjD9x0yIgxMZ741uCYZFERDD8"
+				+ "&year=2012/2013&team=Stoke-City&from=2012-09-01&to=2012-09-02&timezone=Europe/London&limit=100";
 		// sample;
-		
-		
-
 
 	}
-	
-	
 
 }

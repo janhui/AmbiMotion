@@ -36,7 +36,7 @@
     </string-array>
     
     
-    <string name="updateBtn">Change Light</string>
+    <string name="updateBtn">Working</string>
     
     
     <string name="team_prompt">Select a team</string>
@@ -44,7 +44,7 @@
     
     
     
-    <string name="txt_team_selector">Select team</string>
+    <string name="txt_team_selector">Checkout your hue!!!</string>
     
     
 </resources>
