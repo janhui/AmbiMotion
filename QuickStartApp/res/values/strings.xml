@@ -6,7 +6,7 @@
     <string name="no_bridge">No Bridge Found.   Start Bridge Search</string>
     <string name="btn_refresh">Refresh</string>
     <string name="btn_find_bridge">Find new bridge</string>
-    <string name="btn_select">Updater</string>
+    <string name="btn_select">Submit</string>
     <string name="btn_default">default</string>
     <string name="search_progress">Searching ...</string>
     <string name="btn_ok">Ok</string>
@@ -34,6 +34,9 @@
     <string-array name="league_arrays" >
         <item>premier-league</item>
     </string-array>
+    
+    
+    <string name="updateBtn">Change Light</string>
     
     
     <string name="team_prompt">Select a team</string>
